@@ -3,10 +3,11 @@ import { MouseEvent, useState } from "react";
 interface ListGroupProps{
     items: string[];
     heading: string;
+    onSelectItem:(Item:string) => void;
 }
 // o react cria um objeto para esse elemento a partir dos atributos passados na tag, nesse caso, o elemento vai ser do tipo ListGroupsProps, ou seja, estamos criando um obejto dessa classe/Interface
 
-function ListGroup({items, heading}: ListGroupProps){
+function ListGroup({items, heading, onSelectItem}: ListGroupProps){
 
     //Hook  
     //-> 0: varibale (selectedIndex variable)
@@ -22,13 +23,13 @@ function ListGroup({items, heading}: ListGroupProps){
     const getMessage = () =>{
         return items.length === 0 && <p> No item found</p>;
     }
-
+    
     return (<>
         <h1>List</h1>
         {getMessage()}
         <ul className="list-group">
         {items.map((item, index)=>{return <li className = {selectedIndex === index? 'list-group-item active': 'list-group-item'}
-        onClick={(e)=>{handle(e, item, index)}} key={item}>{item}</li>})}
+        onClick={(e)=>{handle(e, item, index); onSelectItem(item)}} key={item}>{item}</li>})}
         </ul>
     </>);
 }
